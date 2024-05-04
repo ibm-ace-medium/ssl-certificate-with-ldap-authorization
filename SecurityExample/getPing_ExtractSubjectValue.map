@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
+    <inlinedXMLSchema><![CDATA[<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="subjectName" type="xsd:string"/>
+</xsd:schema>]]></inlinedXMLSchema>
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/assembly/Environment.xsd" var="var1"/>
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/BlobMessage.xsd" var="var2"/>
+    <input inlinedXMLSchema="true" path="../schema_0.xsd" var="var"/>
+    <input inlinedXMLSchema="true" path="../schema_0.xsd" var="var3"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/assembly/Environment.xsd" var="var4"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/BlobMessage.xsd" var="var5"/>
+    <namespaces>
+        <namespace kind="extension" prefix="fn" uri="http://www.w3.org/2005/xpath-functions"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="getPing_ExtractSubjectValue">
+        <input path="$var1/mb:env(Environment)" var="Environment">
+            <cast castType="userDefined" path="$Environment/Variables/any" qualifier="subjectName" ref="var" var="any"/>
+        </input>
+        <input derivedFrom="MB:JSON_operation_name:getPing" path="$var2/mb:msg(BLOB,assembly,BLOB,LocalEnvironment)" var="ComIbmMessageAssembly_BLOB"/>
+        <output path="$var4/mb:env(Environment)" var="Environment1">
+            <cast castType="userDefined" path="$Environment1/Variables/any" qualifier="subjectName" ref="var" var="any1"/>
+        </output>
+        <output path="$var5/mb:msg(BLOB,assembly,BLOB,LocalEnvironment)" var="ComIbmMessageAssembly_BLOB1"/>
+        <passthrough>
+            <input path="$Environment/."/>
+            <output path="$Environment1/."/>
+            <updates>
+                <function ref="fn:substring-after">
+                    <input path="$ComIbmMessageAssembly_BLOB/LocalEnvironment/HTTP/Input/TransportSecurity/ClientAuth/Certificate/Subject" var="Subject"/>
+                    <output path="$Environment1/Variables/subjectName"/>
+                    <param name="string1" value="$Subject"/>
+                    <param name="string2" value="'CN='"/>
+                </function>
+            </updates>
+        </passthrough>
+        <task type="info">
+            <documentation description="The REST API input data of operation getPing.">This Task is provided to show the location of the REST API input data of operation getPing.
+The path and query parameters are provided under "Parameters".
+You may need to use these as inputs to your mappings.</documentation>
+            <input path="$ComIbmMessageAssembly_BLOB/LocalEnvironment/REST/Input"/>
+        </task>
+    </mappingDeclaration>
+</mappingRoot>

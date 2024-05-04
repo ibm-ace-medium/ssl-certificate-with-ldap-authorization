@@ -1,0 +1,13 @@
+---
+ResourceManagers:
+  JVM:
+    #jvmSystemProperty: '-Djavax.net.debug=trace'
+    jvmDebugPort: 9000
+    keystoreType: 'P12'
+    keystoreFile: '{absolute path}/keystore.p12'
+    keystorePass: 'LenovoLenovo123'
+    truststoreType: 'JKS'
+    truststoreFile: '{absolute path}/truststore.jks'
+    truststorePass: 'LenovoLenovo123'
+  HTTPSConnector:
+    ReqClientAuth: true             # Controls whether to request for client certificate during tls handshake.

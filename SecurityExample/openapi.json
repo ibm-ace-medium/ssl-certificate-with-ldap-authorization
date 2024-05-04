@@ -1,0 +1,31 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "SecurityExample",
+        "version": "1.0.0",
+        "description": "SecurityExample"
+    },
+    "servers": [
+        {
+            "url": "/securityexample/v1"
+        }
+    ],
+    "paths": {
+        "/ping": {
+          "get": {
+            "responses": {
+              "200": {
+                "description": "success",
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+}
